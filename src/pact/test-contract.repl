@@ -1,0 +1,16 @@
+(begin-tx)
+(module test-ns GOVERNANCE
+  (defcap GOVERNANCE () true)
+  (defconst NAMESPACE_GUARD (create-user-guard (succeed)))
+  (defun succeed () true)
+)
+
+(define-namespace "free" test-ns.NAMESPACE_GUARD test-ns.NAMESPACE_GUARD)
+(commit-tx)
+
+(begin-tx)
+(env-data { "init": true })
+(load "test-contract.pact")
+(commit-tx)
+
+(verify "free.verifyspvmock")

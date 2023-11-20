@@ -22,7 +22,6 @@ import {
   signTransaction,
   submit,
 } from './helpers';
-import { input } from '@inquirer/prompts';
 
 const NETWORK_ID = process.env.CHAINWEB_NETWORK || 'fast-development';
 const CHAIN_ID = (process.env.CHAINWEB_CHAIN || '0') as ChainId;
@@ -61,34 +60,6 @@ const getSignFunction = (
         '3. Copy and Paste the following transaction into the "Signature Builder" field',
       );
       console.log(`\n${JSON.stringify(tx)}\n`);
-      console.log(
-        `4. Make sure the "Hash" is "${tx.hash}". This ensures that you're singing the same transaction`,
-      );
-      console.log(
-        '5. In the "Details" tab, verify that your public key is in the "Signers" section',
-      );
-      console.log("and you're not signing for something malicious");
-      console.log('6. Click "Sign"');
-      console.log(
-        '7. the whole JSON and paste it here (or just value of the "sig" key-value pair)',
-      );
-
-      const txString = await input({
-        message: 'Please enter the Chainweaver result, or just the signature',
-        transformer(answer) {
-          try {
-            return answer;
-          } catch (e) {
-            return JSON.stringify(
-              addSignatures(tx, {
-                sig: answer,
-                pubKey: parsedTx.signers[0].pubKey,
-              }),
-            );
-          }
-        },
-      });
-      return JSON.parse(txString);
     };
   } else {
     return signWithChainweaver;

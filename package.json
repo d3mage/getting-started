@@ -4,7 +4,12 @@
   "description": "5 minute quick-start with Kadena",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node -T src/index.ts"
+    "start": "ts-node -T src/index.ts",
+    "deploy": "npm run start -- deploy --keys \"3ebc08c22ec58cb71d05b5cc1ecfa1d54bce03deed7562d7f3a6f9fe890a2b22\" --predicate \"keys-all\" --file src/pact/test-contract.pact --sign-manually",
+    "interact": "ts-node src/interact.ts",
+    "generate": "npx pactjs contract-generate --file src/pact/test-contract.pact",
+    "node": "npx hardhat node",
+    "deploy-sol": "npx hardhat run ./deploy-sol.ts --network sepolia"
   },
   "keywords": [],
   "author": "Albert Groothedde <albert@kadena.io>",
@@ -13,10 +18,14 @@
     "@inquirer/prompts": "^3.2.0",
     "@kadena/client": "^1.4.0",
     "@kadena/cryptography-utils": "^0.3.8",
-    "commander": "^11.0.0"
+    "commander": "^11.0.0",
+    "hardhat": "^2.18.1"
   },
   "devDependencies": {
+    "@kadena/pactjs-cli": "^1.6.1",
+    "@nomiclabs/hardhat-ethers": "^2.2.3",
     "@types/node": "^20.6.3",
+    "dotenv": "^16.3.1",
     "ts-node": "^10.9.1"
   }
 }
